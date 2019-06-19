@@ -15,22 +15,12 @@ module.exports = {
       }
     );
   },
-  getTagsByPage: function(req, res) {
-    const param = [(req.body.pageNum - 1) * req.body.pageSize, req.body.pageSize];
+  getTags: function(req, res) {
     dbApi(
-      sql.getTagsByPage,
-      param,
+      sql.getTags,
+      [],
       function(result) {
-        dbApi(
-          sql.getAllTagsNum,
-          [],
-          function(total) {
-            comRes(res, "1", "操作成功", { rows: result, total: total[0]["COUNT(*)"] });
-          },
-          function(err) {
-            comRes(res, "0", "操作失败", err);
-          }
-        );
+        comRes(res, "1", "操作成功", result);
       },
       function(err) {
         comRes(res, "0", "操作失败", err);
