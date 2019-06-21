@@ -3,7 +3,7 @@ const dbApi = require("../utils/dbApi.js");
 const comRes = require("../utils/comRes.js");
 module.exports = {
   addBlog: function(req, res) {
-    const param = [req.body.title, req.body.cover, req.body.description, req.body.content, req.body.tags, req.body.auth];
+    const param = [req.body.title, req.body.cover, req.body.keywords, req.body.description, req.body.content, req.body.tags, req.body.auth];
     dbApi(
       sql.addBlog,
       param,
@@ -15,12 +15,27 @@ module.exports = {
       }
     );
   },
-  getTags: function(req, res) {
+  getBlogByPage: function(req, res) {
+    const condi = req.body.tagId ? ` WHERE tags like '%${req.body.tagId}%'` : "";
+    const sql0 = "SELECT * FROM blog " + condi + " order by id desc limit ?,?";
     dbApi(
-      sql.getTags,
-      [],
+      sql0,
+      [(req.body.pageNum - 1) * req.body.pageSize, req.body.pageSize],
       function(result) {
-        comRes(res, "1", "操作成功", result);
+        dbApi(
+          sql.getBlogNum,
+          [],
+          function(result2) {
+            const obj = {
+              total: JSON.parse(JSON.stringify(result2))[0]["count(*)"],
+              data: result
+            };
+            comRes(res, "1", "操作成功", obj);
+          },
+          function(err) {
+            comRes(res, "0", "操作失败", err);
+          }
+        );
       },
       function(err) {
         comRes(res, "0", "操作失败", err);

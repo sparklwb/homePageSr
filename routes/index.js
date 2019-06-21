@@ -8,4 +8,5 @@ module.exports = function(app) {
     .post(tags.addTags)
     .get(tags.getTags);
   app.route("/blog").post(blog.addBlog);
+  app.route("/blog/page").post(blog.getBlogByPage);
 };
