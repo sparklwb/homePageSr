@@ -15,6 +15,19 @@ module.exports = {
       }
     );
   },
+  updateBlog: function(req, res) {
+    const param = [req.body.title, req.body.cover, req.body.keywords, req.body.description, req.body.content, req.body.tags, req.body.auth, req.params.id];
+    dbApi(
+      sql.updateBlog,
+      param,
+      function(result) {
+        comRes(res, "1", "操作成功", {});
+      },
+      function(err) {
+        comRes(res, "0", "操作失败", err);
+      }
+    );
+  },
   getBlogByPage: function(req, res) {
     const condi = req.body.tagId ? ` WHERE tags like '%${req.body.tagId}%'` : "";
     const sql0 = "SELECT * FROM blog " + condi + " order by id desc limit ?,?";
