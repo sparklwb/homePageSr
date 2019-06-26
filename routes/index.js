@@ -11,5 +11,5 @@ module.exports = function(app) {
   app.route("/blog").post(blog.addBlog);
   app.route("/blog/login").post(auth.login);
   app.route("/blog/page").post(blog.getBlogByPage);
-  app.route("/blog/:id").post(blog.updateBlog);
+  app.route("/blog/:id").post(blog.updateBlog).get(blog.getBlogById);
 };

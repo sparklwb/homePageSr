@@ -28,6 +28,19 @@ module.exports = {
       }
     );
   },
+  getBlogById: function(req, res) {
+    const param = [req.params.id];
+    dbApi(
+      sql.getBlogById,
+      param,
+      function(result) {
+        comRes(res, "1", "操作成功", result);
+      },
+      function(err) {
+        comRes(res, "0", "操作失败", err);
+      }
+    );
+  },
   getBlogByPage: function(req, res) {
     const condi = req.body.tagId ? ` WHERE tags like '%${req.body.tagId}%'` : "";
     const sql0 = "SELECT * FROM blog " + condi + " order by id desc limit ?,?";
