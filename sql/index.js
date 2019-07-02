@@ -1,7 +1,7 @@
 module.exports = {
   addTags: "INSERT INTO tags(name,textcolor,bgcolor) VALUES(?,?,?)",
   getTags: "SELECT * FROM tags order by id",
-  getBlogByPage: "SELECT * FROM blog order by id desc limit ?,?",
+  getBlogByPage: "SELECT * FROM blog WHERE title like ? order by id desc limit ?,?",
   getBlogNum: "select count(*) from blog",
   getBlogById: "SELECT * FROM blog WHERE id = ?",
   getBlogByTag: "",

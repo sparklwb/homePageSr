@@ -42,7 +42,7 @@ module.exports = {
     );
   },
   getBlogByPage: function(req, res) {
-    const condi = req.body.tagId ? ` WHERE tags like '%${req.body.tagId}%'` : "";
+    const condi = `WHERE tags like ${req.body.tagId ? "'%" + req.body.tagId + "%'" : "'%'"} AND title like ${req.body.title ? "'%" + req.body.title + "%'" : "'%'"}`;
     const sql0 = "SELECT * FROM blog " + condi + " order by id desc limit ?,?";
     dbApi(
       sql0,
