@@ -49,7 +49,7 @@ module.exports = {
       [(req.body.pageNum - 1) * req.body.pageSize, req.body.pageSize],
       function(result) {
         dbApi(
-          sql.getBlogNum,
+          `select count(*) from blog ` + condi,
           [],
           function(result2) {
             const obj = {
